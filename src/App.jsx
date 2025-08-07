@@ -17,6 +17,9 @@ import ProjectOverview from "./components/pages/ProjectOverview";
 import Unauthorized from "./components/pages/Unauthorized";
 import PrivateRoute from "./components/routes/PrivateRoute";
 
+import { BASE_URL } from './config';
+fetch(`${BASE_URL}/api/data`)
+
 export default function App() {
   const { user } = useContext(AuthContext);
 
@@ -123,6 +126,8 @@ export default function App() {
           </Layout>
         }
       />
+
+      
 
       {/* Ruta acceso no autorizado */}
       <Route path="/unauthorized" element={<Unauthorized />} />
