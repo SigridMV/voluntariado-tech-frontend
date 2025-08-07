@@ -1,12 +1,51 @@
-# React + Vite
+# Volunteering Tech Backend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+This project is a backend API to connect schools and volunteers for technology education.  
+Users can register as either schools or volunteers, log in, and schedule sessions.  
+It uses PostgreSQL for data storage, Prisma ORM for database management, and JWT for authentication.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- User registration and login with role-based access  
+- Password hashing for security  
+- Scheduling system to book volunteer sessions  
+- Basic project and availability management  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Technology Stack
+
+- Node.js with Express  
+- Prisma ORM  
+- PostgreSQL database  
+- JSON Web Tokens (JWT) for authentication  
+- Bcrypt for password hashing  
+
+## Setup Instructions
+
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/SigridMV/volunteering-tech-backend.git
+   cd volunteering-tech-backend
+
+
+2. Install dependencies
+    npm install
+
+3. Setup environment variables
+Create a .env file in the root directory and add the following:
+
+DATABASE_URL=your_database_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=4000
+
+4. Run database migrations
+
+npx prisma migrate deploy
+
+5. Start the development server
+
+npm run dev
+
+## License
+This project is open source and available under the MIT License.

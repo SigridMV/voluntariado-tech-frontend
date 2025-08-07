@@ -1,4 +1,4 @@
-// src/components/calendar/ProjectCalendar.jsx
+// src/components/calendar/SchoolCalendar.jsx
 import React, { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar"; // Calendario visual con soporte para localización
 import format from "date-fns/format";
@@ -22,7 +22,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const ProjectCalendar = () => {
+const SchoolCalendar = () => {
   const [events, setEvents] = useState([]); // Estado para almacenar eventos (proyectos)
 
   useEffect(() => {
@@ -31,7 +31,8 @@ const ProjectCalendar = () => {
       try {
         // Obtener token JWT desde localStorage para autorización
         const token = localStorage.getItem("token");
-        const response = await api.get("/projects", {
+        const schoolId = localStorage.getItem("schoolId");
+        const response = await api.get(`/projects?schoolId=${schoolId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -41,7 +42,7 @@ const ProjectCalendar = () => {
 
         // Mapear los proyectos a eventos compatibles con react-big-calendar
         const formattedEvents = projects.map((project) => ({
-          title: project.title,
+          title: project.name,
           start: new Date(project.date), // Asegúrate que project.date sea ISO o formato válido para Date()
           end: new Date(project.date),   // El evento dura un día; para eventos con duración, ajustar end
         }));
@@ -83,6 +84,6 @@ const ProjectCalendar = () => {
   );
 };
 
-export default ProjectCalendar;
+export default SchoolCalendar;
 
 

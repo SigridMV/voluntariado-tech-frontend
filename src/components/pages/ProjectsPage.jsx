@@ -25,7 +25,7 @@ export default function ProjectsPage() {
   /**
    * Filtrar los proyectos que pertenecen a la escuela actual.
    */
-  const filtered = projects.filter((p) => p.schoolId === user.id);
+  const filtered = projects.filter((p) => p.schoolId === user.schoolId);
 
   /**
    * Agregar un nuevo proyecto y actualizar localStorage.
@@ -75,7 +75,7 @@ const visibleProjects =
           <h2 className="text-xl font-semibold mb-4 text-gray-800">
             ➕ Add Project
           </h2>
-          <ProjectForm onAdd={handleAddProject} />
+          <ProjectForm onAdd={handleAddProject} schoolId={user.schoolId} />
         </section>
       )}
 

@@ -8,7 +8,7 @@ import React, { useState } from "react";
  * Props:
  * - onAdd (function): función para agregar un nuevo proyecto al estado principal.
  */
-export default function ProjectForm({ onAdd }) {
+export default function ProjectForm({ onAdd, schoolId }) {
   // Estado local para almacenar los valores del formulario
   const [form, setForm] = useState({
     name: "",
@@ -29,6 +29,7 @@ export default function ProjectForm({ onAdd }) {
     const newProject = {
       ...form,
       id: Date.now(), // Generar ID único (temporal)
+      schoolId: schoolId,
     };
     onAdd(newProject); // Llama al callback del padre
     setForm({ name: "", description: "", date: "", startTime: "", endTime: "" }); // Reiniciar formulario
