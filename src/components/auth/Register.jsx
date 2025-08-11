@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext"; // Contexto para maneja
 export default function Register() {
   // Obtener la función login del contexto para guardar token y usuario globalmente
   const { login } = useContext(AuthContext);
+  
 
   // Estado para manejar formulario con campos: name, email, password y role (por defecto volunteer)
   const [form, setForm] = useState({
@@ -14,6 +15,7 @@ export default function Register() {
     email: "",
     password: "",
     role: "volunteer",
+    
   });
 
   // Estado para manejar errores de validación o API

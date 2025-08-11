@@ -10,6 +10,8 @@ import { AuthContext } from "./AuthContext";
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  
+
   /**
    * login
    * Guarda token y datos de usuario en localStorage, configura el header Authorization y actualiza estado.
@@ -17,6 +19,8 @@ export const AuthProvider = ({ children }) => {
    * @param {object} userData - Información del usuario autenticado
    */
   const login = (token, userData) => {
+    console.log("Token recibido:", token);
+    console.log("User data recibida:", userData);
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
