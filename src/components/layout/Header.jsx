@@ -11,7 +11,7 @@ const Header = () => {
           <HeartHandshake className="w-8 h-8 text-white" />
           <div>
             <h1 className="text-2xl font-bold">DevLunteer</h1>
-            <p className="text-sm text-white/80">Inspirando futuros, conectando talento</p>
+            <p className="text-sm text-white/80">Inspiring futures, connecting talent</p>
           </div>
         </div>
       </div>

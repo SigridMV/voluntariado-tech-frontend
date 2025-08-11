@@ -25,7 +25,7 @@ export default function ProjectList({ projects, onReserve, showVolunteer = false
           key={project.id}
           className="border rounded-lg p-6 bg-white shadow-md hover:shadow-lg transition"
         >
-          {/* Nombre del proyecto */}
+          {/* Project Name */}
           <h3 className="text-2xl font-semibold text-blue-700 mb-1">{project.name}</h3>
 
           {/* Descripción del proyecto */}
@@ -40,7 +40,7 @@ export default function ProjectList({ projects, onReserve, showVolunteer = false
           {/* Información del voluntario asignado (si aplica) */}
           {showVolunteer && project.reservedName && (
             <p className="text-green-700 font-medium text-sm">
-              ✅ Aceptado por: <span className="font-semibold">{project.reservedName}</span>
+              ✅ Accepted by: <span className="font-semibold">{project.reservedName}</span>
             </p>
           )}
 

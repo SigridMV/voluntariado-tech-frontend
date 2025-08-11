@@ -1,17 +1,15 @@
-// src/components/calendar/SchoolCalendar.jsx
 import React, { useState, useEffect } from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar"; // Calendario visual con soporte para localización
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
-import es from "date-fns/locale/es"; // Localización al español
-import "react-big-calendar/lib/css/react-big-calendar.css"; // Estilos por defecto para react-big-calendar
-import api from "../../services/api"; // Instancia axios configurada para llamadas API
+import enUS from "date-fns/locale/en-US";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import api from "../../services/api";
 
-// Configuración de localización para el calendario
 const locales = {
-  es: es,
+  en: enUS,
 };
 
 const localizer = dateFnsLocalizer({
@@ -23,67 +21,211 @@ const localizer = dateFnsLocalizer({
 });
 
 const SchoolCalendar = () => {
-  const [events, setEvents] = useState([]); // Estado para almacenar eventos (proyectos)
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [loadingBooking, setLoadingBooking] = useState(false);
+  const [bookingMessage, setBookingMessage] = useState(null);
 
   useEffect(() => {
-    // Función para obtener proyectos desde la API
-    const fetchProjects = async () => {
+    const fetchData = async () => {
       try {
-        // Obtener token JWT desde localStorage para autorización
         const token = localStorage.getItem("token");
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+
         const schoolId = localStorage.getItem("schoolId");
-        const response = await api.get(`/projects?schoolId=${schoolId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const projectRes = await api.get(`/projects?schoolId=${schoolId}`, {
+          headers,
         });
-
-        const projects = response.data;
-
-        // Mapear los proyectos a eventos compatibles con react-big-calendar
-        const formattedEvents = projects.map((project) => ({
-          title: project.name,
-          start: new Date(project.date), // Asegúrate que project.date sea ISO o formato válido para Date()
-          end: new Date(project.date),   // El evento dura un día; para eventos con duración, ajustar end
+        const projectEvents = projectRes.data.map((project) => ({
+          id: project.id,
+          title: `📚 ${project.name}`,
+          start: new Date(project.date),
+          end: new Date(project.date),
+          type: "project",
+          description: project.description,
         }));
 
-        setEvents(formattedEvents);
+        const availabilityRes = await api.get("/availability/public");
+        const availabilityEvents = availabilityRes.data.map((availability) => ({
+          id: availability.id,
+          title: `🤝 Availability: ${
+            availability.volunteerName || "Volunteer"
+          }`,
+          start: new Date(availability.start_time),
+          end: new Date(availability.end_time),
+          type: "availability",
+          volunteerName: availability.volunteerName,
+          specialties: availability.specialties,
+          modality: availability.modality,
+          date: availability.date,
+        }));
+
+        setEvents([...projectEvents, ...availabilityEvents]);
       } catch (error) {
-        console.error("Error al obtener los proyectos:", error);
-        // Opcional: podrías manejar un estado de error para mostrar en UI
+        console.error("Error fetching calendar data:", error);
       }
     };
 
-    fetchProjects();
-  }, []); // Solo se ejecuta una vez al montar el componente
+    fetchData();
+  }, []);
+
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
+    setBookingMessage(null);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedEvent(null);
+    setBookingMessage(null);
+  };
+
+  const handleBooking = async () => {
+    if (!selectedEvent) return;
+    setLoadingBooking(true);
+    setBookingMessage(null);
+
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { Authorization: `Bearer ${token}` };
+
+      await api.post(
+        "/booking",
+        { availabilityId: selectedEvent.id },
+        { headers }
+      );
+
+      setBookingMessage("Booking created successfully 🎉");
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      const msg = error.response?.data?.message || "Error creating booking";
+      setBookingMessage(msg);
+    } finally {
+      setLoadingBooking(false);
+    }
+  };
 
   return (
-    <div style={{ height: "80vh", padding: "2rem" }}>
-      <Calendar
-        localizer={localizer} // Configuración de localización para fechas y formatos
-        events={events}       // Eventos a mostrar en el calendario
-        startAccessor="start" // Campo que indica inicio del evento
-        endAccessor="end"     // Campo que indica fin del evento
-        culture="es"          // Cultura para textos y formato
-        messages={{
-          next: "Sig.",
-          previous: "Ant.",
-          today: "Hoy",
-          month: "Mes",
-          week: "Semana",
-          day: "Día",
-          agenda: "Agenda",
-          date: "Fecha",
-          time: "Hora",
-          event: "Evento",
-          noEventsInRange: "No hay eventos en este rango.",
-          showMore: (total) => `+ Ver más (${total})`,
-        }} // Traducción de textos del calendario
-      />
-    </div>
+    <>
+      <div style={{ height: "80vh", padding: "2rem" }}>
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          culture="en"
+          defaultDate={new Date()} // Aquí se carga el mes y día actual
+          onSelectEvent={handleSelectEvent}
+          messages={{
+            next: "Next",
+            previous: "Prev",
+            today: "Today",
+            month: "Month",
+            week: "Week",
+            day: "Day",
+            agenda: "Agenda",
+            date: "Date",
+            time: "Time",
+            event: "Event",
+            noEventsInRange: "No events in this range.",
+            showMore: (total) => `+ Show more (${total})`,
+          }}
+        />
+      </div>
+
+      {modalOpen && selectedEvent && (
+        <div
+          onClick={handleCloseModal}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: "white",
+              padding: "2rem",
+              borderRadius: "8px",
+              minWidth: "300px",
+              maxWidth: "500px",
+            }}
+          >
+            <h2>{selectedEvent.title}</h2>
+            <p>
+              <b>Start:</b> {selectedEvent.start.toLocaleString()} <br />
+              <b>End:</b> {selectedEvent.end.toLocaleString()}
+            </p>
+
+            {selectedEvent.type === "availability" && (
+              <>
+                <p>
+                  <b>Volunteer:</b> {selectedEvent.volunteerName || "N/A"}
+                </p>
+                <p>
+                  <b>Specialties:</b>{" "}
+                  {selectedEvent.specialties
+                    ? selectedEvent.specialties.join(", ")
+                    : "N/A"}
+                </p>
+                <p>
+                  <b>Modality:</b> {selectedEvent.modality || "N/A"}
+                </p>
+                <p>
+                  <b>Date:</b> {selectedEvent.date || "N/A"}
+                </p>
+
+                <button
+                  onClick={handleBooking}
+                  disabled={
+                    loadingBooking ||
+                    bookingMessage === "Booking created successfully 🎉"
+                  }
+                  style={{ marginTop: "1rem" }}
+                >
+                  {loadingBooking ? "Booking..." : "Book Availability"}
+                </button>
+
+                {bookingMessage && (
+                  <p
+                    style={{
+                      marginTop: "1rem",
+                      color: bookingMessage.includes("success") ? "green" : "red",
+                    }}
+                  >
+                    {bookingMessage}
+                  </p>
+                )}
+              </>
+            )}
+
+            {selectedEvent.type === "project" && (
+              <p>
+                <b>Description:</b> {selectedEvent.description || "N/A"}
+              </p>
+            )}
+
+            <button onClick={handleCloseModal} style={{ marginTop: "1rem" }}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
 export default SchoolCalendar;
-
 

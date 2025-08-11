@@ -39,7 +39,7 @@ const Navbar = () => {
               }
               aria-current={({ isActive }) => (isActive ? "page" : undefined)}
             >
-              About the project
+              About this project
             </NavLink>
           </li>
         </ul>

@@ -26,6 +26,7 @@ export default function SchoolInfo() {
   useEffect(() => {
     if (!user?.school?.id) return;
 
+
     setLoading(true);
     api
       .get(`/school/${user.school.id}`) // Endpoint para obtener info
@@ -57,7 +58,7 @@ export default function SchoolInfo() {
 
     try {
       await api.put(`/school/${user.school.id}`, form);
-      setSuccess("Información actualizada correctamente.");
+      setSuccess("Information updated successfully.");
     } catch {
       setError("Error al actualizar la información. Intenta de nuevo.");
     } finally {
@@ -69,11 +70,11 @@ export default function SchoolInfo() {
   if (loading) return <p className="text-center py-6">Cargando información del colegio...</p>;
 
   // Si no se encontró la escuela asociada
-  if (!school) return <p className="text-center py-6 text-red-600">No se encontró la información del colegio.</p>;
+  if (!school) return <p className="text-center py-6 text-red-600">School information not found.</p>;
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-blue-700 text-center">Información del Colegio</h2>
+      <h2 className="text-2xl font-bold mb-6 text-blue-700 text-center">School information</h2>
 
       {/* Mensajes de error o éxito */}
       {error && <p className="mb-4 text-red-600 font-semibold">{error}</p>}
@@ -81,7 +82,7 @@ export default function SchoolInfo() {
 
       <form onSubmit={handleSubmit} className="space-y-5" aria-label="Formulario de información del colegio">
         <label className="block">
-          <span className="text-gray-700 font-medium mb-1 block">Nombre del Colegio</span>
+          <span className="text-gray-700 font-medium mb-1 block">School Name</span>
           <input
             type="text"
             name="school_name"
@@ -95,7 +96,7 @@ export default function SchoolInfo() {
         </label>
 
         <label className="block">
-          <span className="text-gray-700 font-medium mb-1 block">Persona de Contacto</span>
+          <span className="text-gray-700 font-medium mb-1 block">Contact Person</span>
           <input
             type="text"
             name="contact_person"
@@ -109,7 +110,7 @@ export default function SchoolInfo() {
         </label>
 
         <label className="block">
-          <span className="text-gray-700 font-medium mb-1 block">Teléfono</span>
+          <span className="text-gray-700 font-medium mb-1 block">Phone Number</span>
           <input
             type="tel"
             name="phone"
@@ -119,7 +120,6 @@ export default function SchoolInfo() {
             placeholder="Ej: +56 9 1234 5678"
             aria-describedby="phoneHelp"
           />
-          <small id="phoneHelp" className="text-gray-500">Opcional</small>
         </label>
 
         <button
@@ -130,7 +130,7 @@ export default function SchoolInfo() {
           }`}
           aria-busy={saving}
         >
-          {saving ? "Guardando..." : "Guardar Cambios"}
+          {saving ? "Guardando..." : "Save Changes"}
         </button>
       </form>
     </div>

@@ -130,7 +130,11 @@ export default function VolunteerAvailability() {
             {!a.reserved && (
               <button
                 onClick={() => {
-                  if (window.confirm("¿Estás seguro que quieres eliminar esta disponibilidad?")) {
+                  if (
+                    window.confirm(
+                      "¿Estás seguro que quieres eliminar esta disponibilidad?"
+                    )
+                  ) {
                     handleDelete(a.id);
                   }
                 }}

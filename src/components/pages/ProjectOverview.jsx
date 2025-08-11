@@ -128,7 +128,7 @@ const ProjectOverview = () => {
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
-                src="src/assets/"
+                src="src\assets\Documentation.png"
                 alt="Technical Documentation"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
