@@ -14,7 +14,7 @@ const ProjectOverview = () => {
 
       <div className="grid gap-6">
         {/* Section: Project Title */}
-        <Card title="Project Title">Tech Volunteer Scheduling App</Card>
+        <Card title="Project Title">DevLunteer Inspiring futures, connecting talent</Card>
 
         {/* Section: Category */}
         <Card title="Project Category">Personal professional development</Card>
