@@ -71,7 +71,7 @@ const ProjectOverview = () => {
           <ul className="list-none space-y-6">
             <li className="flex items-center gap-4">
               <ImageWithModal
-                src="../../src/assets/Diagram.png"
+                src="/src/assets/Diagram.png"
                 alt="ER Diagram"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
@@ -79,7 +79,7 @@ const ProjectOverview = () => {
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
-                src="../../src/assets/Wireframe.png"
+                src="/src/assets/Wireframe.png"
                 alt="Wireframes and UI"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
@@ -87,12 +87,12 @@ const ProjectOverview = () => {
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
-                src="../../src/assets/github.png"
+                src="/src/assets/github.png"
                 alt="Source Code"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
                 <ImageWithModal
-                src="../../src/assets/github2.png"
+                src="/src/assets/github2.png"
                 alt="Source Code"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
@@ -100,27 +100,27 @@ const ProjectOverview = () => {
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
-                src="../../src/assets/home.png"
+                src="/src/assets/home.png"
                 alt="Screenshots"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
                 <ImageWithModal
-                src="../../src/assets/Login.png"
+                src="/src/assets/Login.png"
                 alt="Screenshots"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
                 <ImageWithModal
-                src="../../src/assets/register.png"
+                src="/src/assets/register.png"
                 alt="Screenshots"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
                 <ImageWithModal
-                src="../../src/assets/img1.png"
+                src="/src/assets/img1.png"
                 alt="Screenshots"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
                 <ImageWithModal
-                src="../../src/assets/img3.png"
+                src="/src/assets/img3.png"
                 alt="Screenshots"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
@@ -128,7 +128,7 @@ const ProjectOverview = () => {
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
-                src="../../src/assets/Documentation.png"
+                src="/src/assets/Documentation.png"
                 alt="Technical Documentation"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
