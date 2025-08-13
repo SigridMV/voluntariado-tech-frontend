@@ -72,18 +72,18 @@ const ProjectOverview = () => {
             <li className="flex items-center gap-4">
               <ImageWithModal
                 src="/assets/Diagram.png"
-                alt="ER Diagram"
+                alt="1.	Entity-Relationship diagram"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
-              <span className="text-lg font-medium">ER diagram</span>
+              <span className="text-lg font-medium">1.Entity-Relationship diagram</span>
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
                 src="/assets/Wireframe.png"
-                alt="Wireframes and UI"
+                alt="2.	Wireframes and UI designs"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
-              <span className="text-lg font-medium">Wireframes and UI</span>
+              <span className="text-lg font-medium">2. Wireframes and UI designs</span>
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
@@ -96,7 +96,12 @@ const ProjectOverview = () => {
                 alt="Source Code"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
-              <span className="text-lg font-medium">Source code </span>
+                <ImageWithModal
+                src="/assets/codigo.png"
+                alt="Source Code"
+                className="w-20 h-20 object-contain rounded cursor-pointer"
+              />
+              <span className="text-lg font-medium">3. Source code </span>
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
@@ -124,7 +129,7 @@ const ProjectOverview = () => {
                 alt="Screenshots"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
-              <span className="text-lg font-medium">Screenshots </span>
+              <span className="text-lg font-medium">4. Screenshots </span>
             </li>
             <li className="flex items-center gap-4">
               <ImageWithModal
@@ -132,7 +137,15 @@ const ProjectOverview = () => {
                 alt="Technical Documentation"
                 className="w-20 h-20 object-contain rounded cursor-pointer"
               />
-              <span className="text-lg font-medium">Technical documentation</span>
+              <span className="text-lg font-medium">5. Technical documentation</span>
+            </li>
+              <li className="flex items-center gap-4">
+              <ImageWithModal
+                src="/assets/Trello.png"
+                alt="Technical Documentation"
+                className="w-20 h-20 object-contain rounded cursor-pointer"
+              />
+              <span className="text-lg font-medium">6.	Extra: Trello </span>
             </li>
           </ul>
         </Card>
